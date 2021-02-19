@@ -1,7 +1,7 @@
 package main.view;
 
-import main.Main;
-import main.Utilits;
+import main.main.Main;
+import main.main.Utilits;
 import main.broker.Config;
 import main.broker.Instrument;
 import main.broker.TradeConst;
@@ -10,7 +10,6 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
@@ -85,9 +84,9 @@ public class TradingChart {
 //            panel2.add(buttonSaveScreen, BorderLayout.WEST);
 //            panel2.add(buttonOpen, BorderLayout.WEST);
 //            panel2.add(buttonClose, BorderLayout.WEST);
-            panel2.add(fieldMin, BorderLayout.EAST);
-            panel2.add(fieldMax, BorderLayout.EAST);
-            panel2.add(buttonChangeAvgValue, BorderLayout.EAST);
+            panel2.add(fieldMin, BorderLayout.WEST);
+            panel2.add(fieldMax, BorderLayout.WEST);
+            panel2.add(buttonChangeAvgValue, BorderLayout.WEST);
 //            panel2.add(fieldSum, BorderLayout.EAST);
 //            panel2.add(buttonSetSum, BorderLayout.EAST);
 
@@ -107,7 +106,7 @@ public class TradingChart {
         lineAvgMin = new XYSeries(TradeConst.MIN_AVG);
         lineAvgMax = new XYSeries(TradeConst.MAX_AVG);
 
-        //создание датасета и до бавление линий в него
+        //создание датасета и добавление линий в него
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(linePrice);
         dataset.addSeries(lineAvgMin);
@@ -126,12 +125,12 @@ public class TradingChart {
         );
 
         yAxis = new NumberAxis();
-        yAxis.setTickUnit(new NumberTickUnit(0.001));
+//        yAxis.setTickUnit(new NumberTickUnit(0.001));
 
         plot = chart.getXYPlot();
         plot.getRendererForDataset(dataset).setSeriesPaint(2, Color.GREEN);
 
-        new Timer(900000, e -> drawChart()).start();
+        new Timer(Config.SLEEP * 1000, e -> drawChart()).start();
 
         return new ChartPanel(chart) {
             @Override
@@ -144,7 +143,9 @@ public class TradingChart {
     public void drawChart() {
         System.out.println(Utilits.getTime("HH:mm:ss") + " creating chart");
         System.out.println("--------------------------------");
+
         Instrument instrument = Main.pricesBase.getInstrumentData(60, Config.currentInstrument);
+
         linePrice.clear();
         lineAvgMin.clear();
         lineAvgMax.clear();
@@ -157,12 +158,16 @@ public class TradingChart {
             linePrice.add(i + 1, instrument.getPricesList().get(i));
 
             plot.setRangeAxis(yAxis);
-            plot.getRangeAxis().setRange(instrument.getMin() - 0.0001, instrument.getMax() + 0.0001);
+
+            //вычисление небольшого отступа от верха и от низа графика
+            double rangeOut = (instrument.getMax() - instrument.getMin()) * 0.1;
+            plot.getRangeAxis().setRange(instrument.getMin() - rangeOut, instrument.getMax() + rangeOut);
         }
 
         //загрузка данных 120 последних записей из базы, для построения линий средней цены
         instrument = Main.pricesBase.getInstrumentData(120, Config.currentInstrument);
 
+        //заполнение списка значений для линий
         List<Double> listMin = instrument.getAvgListByPriceCount(TradeConst.MIN_AVG, 60);
         List<Double> listMax = instrument.getAvgListByPriceCount(TradeConst.MAX_AVG, 60);
 
@@ -176,6 +181,7 @@ public class TradingChart {
         }
     }
 
+    //отрисовка графика и сохранение графика в файл изображения
     public void drawAndMakeScreen(String instrumentName) {
         Config.setCurrentInstrument(instrumentName);
         drawChart();

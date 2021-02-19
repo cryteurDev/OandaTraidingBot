@@ -1,13 +1,12 @@
 package main.bot;
 
-import main.Main;
-import main.Utilits;
+import main.main.Main;
+import main.main.Utilits;
 import main.broker.Broker;
 import main.broker.Config;
 import main.broker.Instrument;
 import main.broker.TradeConst;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 public class Monitor {

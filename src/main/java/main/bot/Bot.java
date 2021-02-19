@@ -1,6 +1,6 @@
 package main.bot;
 
-import main.Utilits;
+import main.main.Utilits;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
