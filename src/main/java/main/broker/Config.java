@@ -8,10 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Config {
-    public static final String URL = "https://api-fxpractice.oanda.com";
-    public static final String TOKEN = "eac70b6e9b11e8e78dad4ce731b095db-e9103c3cd91def20f3ccce33be529b46";
-//    public static final AccountID ACCOUNT_ID = new AccountID("101-001-16895783-001");
-    public static final AccountID ACCOUNT_ID = new AccountID("101-001-16895783-002");
+    public static final String URL = OandaData.URL;
+    public static final String TOKEN = OandaData.TOKEN;
+    public static final AccountID ACCOUNT_ID = OandaData.ACCOUNT_ID;
     public static final int SLEEP = 60;
 
     public static List<Instrument> instrumentList = new ArrayList<>();

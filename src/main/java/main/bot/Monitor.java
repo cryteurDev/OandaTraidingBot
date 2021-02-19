@@ -35,16 +35,16 @@ public class Monitor {
             boolean crossUp = instrument.getAverageMove().isCrossOnUp();
 
             if (crossUp && !instrument.isSendOnOpen()) {
-//                Broker.openTestOrder(instrument);
-                Broker.sendAdvMsgUp(instrument);
+                Broker.openTestOrder(instrument);
+//                Broker.sendAdvMsgUp(instrument);
 
                 instrument.setSendOnOpen(true);
                 instrument.setSendOnClose(false);
             }
 
             if (crossDown && !instrument.isSendOnClose() && instrument.isSendOnOpen()) {
-//                Broker.closeTestOrder(instrument);
-                Broker.sendAdvMsgDown(instrument);
+                Broker.closeTestOrder(instrument);
+//                Broker.sendAdvMsgDown(instrument);
 
                 instrument.setSendOnOpen(false);
                 instrument.setSendOnClose(true);

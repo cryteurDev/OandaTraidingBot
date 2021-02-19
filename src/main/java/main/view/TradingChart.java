@@ -80,13 +80,13 @@ public class TradingChart {
             chartPanel = createChart();
             panel.add(chartPanel, BorderLayout.CENTER);
 
-            JPanel panel2 = new JPanel();
+            JPanel panel2 = new JPanel(new FlowLayout());
 //            panel2.add(buttonSaveScreen, BorderLayout.WEST);
 //            panel2.add(buttonOpen, BorderLayout.WEST);
 //            panel2.add(buttonClose, BorderLayout.WEST);
-            panel2.add(fieldMin, BorderLayout.WEST);
-            panel2.add(fieldMax, BorderLayout.WEST);
-            panel2.add(buttonChangeAvgValue, BorderLayout.WEST);
+            panel2.add(fieldMin);
+            panel2.add(fieldMax);
+            panel2.add(buttonChangeAvgValue);
 //            panel2.add(fieldSum, BorderLayout.EAST);
 //            panel2.add(buttonSetSum, BorderLayout.EAST);
 
