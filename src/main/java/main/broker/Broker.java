@@ -15,8 +15,8 @@ import com.oanda.v20.trade.TradeSpecifier;
 import com.oanda.v20.transaction.OrderFillTransaction;
 import com.oanda.v20.transaction.TradeReduce;
 import com.oanda.v20.transaction.TransactionID;
-import main.Main;
-import main.Utilits;
+import main.main.Main;
+import main.main.Utilits;
 import main.bot.Bot;
 import main.bot.BotIds;
 

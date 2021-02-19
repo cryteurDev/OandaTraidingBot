@@ -1,4 +1,4 @@
-package main;
+package main.main;
 
 import main.bot.Monitor;
 import main.broker.Config;
